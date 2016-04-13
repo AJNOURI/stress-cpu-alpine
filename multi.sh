@@ -21,13 +21,13 @@ go(){
     for (( i=1; i<=$NBR; i=i+1 ))
     do
         echo -e "\nContainer $CNAMES $i\n"
-        sudo docker run -tid $CPU --hostname $CNAMES$i --name $CNAMES$i $ITAG 
+        sudo docker run -tid $CPU1 $CPU2 $CPU3 --hostname $CNAMES$i --name $CNAMES$i $ITAG 
         sleep 2
     done
 }
 
 
-if [ "$#" -lt 3 ]; then
+if [ "$#" -lt 2 ] && [ "$#" -gt 3 ]; then
   echo ""
   echo -e "Usage: $0 <image-tag> <nbr-of-containers> <cpu-options>\n" >&2
   echo Example of cpu option: -c 50000
@@ -39,7 +39,9 @@ ITAG="$(sudo docker images | grep $1 | awk '{ print $3; }')"
 IS_IMAGE="$(sudo docker images | grep $1 | awk '{ print $1; }')"
 CNAMES="test-container"
 NBR=$2
-CPU=$3
+CPU1=$3
+CPU2=$4
+CPU3=$5
 echo "Image tag = $1"
 echo "Number of containers = $2"
 echo "ITAG = $ITAG"
