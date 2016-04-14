@@ -21,6 +21,7 @@ go(){
     for (( i=1; i<=$NBR; i=i+1 ))
     do
         echo -e "\nContainer $CNAMES $i\n"
+        IS_CTN="$(sudo docker ps -a | grep $CNAMES$i | awk '{ print $1; }')"
         sudo docker run -tid $CPU1 $CPU2 $CPU3 --hostname $CNAMES$i --name $CNAMES$i $ITAG 
         sleep 2
     done
@@ -53,7 +54,7 @@ if [ "$IS_IMAGE" == "" ]
 then
   echo -e "Image $1 not found \n" >&2
   echo -e "Check for the available image with <docker images> command. \n"
-  docker pull $1 || echo "No such image" ; die 1
+  docker pull $1
 fi
 go
 
